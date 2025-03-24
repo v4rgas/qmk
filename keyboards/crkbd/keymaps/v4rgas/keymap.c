@@ -74,7 +74,7 @@ void write_slave_layer_state(void) {
 
             break;
         case LAYER_1:
-            static const char PROGMEM ARROWS[] = {27, 24, 25, 26, 0};
+            static const char PROGMEM ARROWS[] = {27, 25, 24, 26, 0};
             if (is_shift_pressed) {
                 oled_write("^&*()", false);
                 oled_write_P(ARROWS, false);
