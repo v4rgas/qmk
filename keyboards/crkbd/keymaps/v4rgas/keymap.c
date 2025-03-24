@@ -24,3 +24,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif // OTHER_KEYMAP_C
 
 
+#ifdef OLED_ENABLE
+
+enum {
+    LAYER_0,
+    LAYER_1,
+    LAYER_2,
+    LAYER_3,
+}
+
+bool oled_task_user(void) {
+
+    oled_set_cursor(0, 1);
+
+    int highest_layer = get_highest_layer(layer_state);
+    switch (highest_layer) {
+        case LAYER_0:
+            oled_write["Layer 0", false];
+            break;
+        case LAYER_1:
+            oled_write["Layer 1", false];
+            break;
+        case LAYER_2:
+            oled_write["Layer 2", false];
+            break;
+        case LAYER_3:
+            oled_write["Layer 3", false];
+            break;
+        default:
+            oled_write("Unknown", false);
+            break;
+    }
+
+    return false;
+}
+
+#endif // OLED_ENABLE
+
+
+
