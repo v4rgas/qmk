@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 ﻿# Build
 
 qmk compile -kb crkbd/rev1 -km v4rgas
 
+=======
+>>>>>>> 14ad48418e8a8c1669317e9c549b6ba9f9819950
 # Quantum Mechanical Keyboard Firmware
 
 [![Current Version](https://img.shields.io/github/tag/qmk/qmk_firmware.svg)](https://github.com/qmk/qmk_firmware/tags)
