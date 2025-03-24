@@ -78,17 +78,17 @@ void write_slave_layer_state(void) {
             if (is_shift_pressed) {
                 oled_write("^&*()", false);
                 oled_write_P(ARROWS, false);
-                oled_write("     ", false);
+                oled_write("      ", false);
             } else {
                 oled_write("67890", false);
                 oled_write_P(ARROWS, false);
-                oled_write("     ", false);
+                oled_write("      ", false);
             }
 
             break;
         case LAYER_2:
             if (is_shift_pressed)
-                oled_write("^&*()_+{}|_+{}| ", false);
+                oled_write("^&*()_+{}|_+{}|", false);
             else
                 oled_write("^&*()-=[]\\_+{}|", false);
             break;
