@@ -129,7 +129,7 @@ void write_boolean(bool value) {
 }
 
 void write_led_states(void) {
-    led_t led_state = host_keyboard_led_state();
+    led_t led_state = host_keyboar/d_led_state();
 
     oled_write("NUM:", false);
     write_boolean(led_state.num_lock);
