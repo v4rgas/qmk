@@ -10,8 +10,8 @@
  */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {[0] = LAYOUT_split_3x6_3(KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_ESC, KC_LGUI, MO(2), KC_SPC, KC_ENT, MO(1), KC_RALT),
-                                                              [1] = LAYOUT_split_3x6_3(KC_TAB, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSPC, KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_NO, KC_NO, KC_LCTL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LGUI, MO(3), KC_SPC, KC_ENT, KC_TRNS, KC_RALT),
-                                                              [2] = LAYOUT_split_3x6_3(KC_TAB, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC, KC_LSFT, LCTL(KC_LSFT), KC_PSCR, KC_DEL, KC_NO, KC_NO, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS, KC_GRV, KC_LCTL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, KC_TILD, KC_LGUI, KC_TRNS, KC_SPC, KC_ENT, MO(3), KC_RALT),
+                                                              [1] = LAYOUT_split_3x6_3(KC_TAB, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSPC, KC_LSFT, LCTL(KC_LSFT), KC_PSCR, KC_DEL, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_NO, KC_NO, KC_LCTL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LGUI, MO(3), KC_SPC, KC_ENT, KC_TRNS, KC_RALT),
+                                                              [2] = LAYOUT_split_3x6_3(KC_TAB, KC_QUOT, KC_LT, KC_GT, KC_DQUO, KC_DOT, KC_AMPR, KC_UNDS, KC_LBRC, KC_RBRC, KC_PERC, KC_BSPC, KC_LSFT, KC_EXLM, KC_MINS, KC_PLUS, KC_EQL, KC_HASH, KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES, KC_GRV, KC_LCTL, KC_CIRC, KC_SLSH, KC_ASTR, KC_BSLS, KC_NO, KC_TILD, KC_DLR, KC_LCBR, KC_RCBR, KC_AT, KC_NO, KC_LGUI, KC_TRNS, KC_SPC, KC_ENT, MO(3), KC_RALT),
                                                               [3] = LAYOUT_split_3x6_3(QK_BOOT, KC_NO, KC_NO, KC_NO, RGB_VAD, RGB_VAI, KC_F1, KC_F2, KC_F3, KC_F4, KC_NO, KC_BSPC, KC_LSFT, KC_LALT, RGB_VAD, RGB_VAI, RGB_SAD, RGB_SAI, KC_F5, KC_F6, KC_F7, KC_F8, KC_NO, KC_NO, KC_LCTL, RGB_TOG, RGB_RMOD, RGB_MOD, RGB_HUD, RGB_HUI, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_LGUI, KC_TRNS, KC_SPC, KC_ENT, KC_TRNS, KC_RALT)};
 
 #ifdef OTHER_KEYMAP_C
@@ -48,9 +48,9 @@ void write_layer_state(void) {
             break;
         case LAYER_2:
             if (is_shift_pressed)
-                oled_write("!@#$%          ", false);
+                oled_write("\"<>\">!_++#^?*| ", false);
             else
-                oled_write("!@#$%          ", false);
+                oled_write("'<>\".!-+=#^/*\\ ", false);
             break;
         case LAYER_3:
             oled_write("               ", false);
@@ -74,7 +74,7 @@ void write_slave_layer_state(void) {
 
             break;
         case LAYER_1:
-            static const char PROGMEM ARROWS[] = {27, 25, 24, 26, 0};
+            static const char PROGMEM ARROWS[] = {27, 25, 24, 26, '\0'};
             if (is_shift_pressed) {
                 oled_write("^&*()", false);
                 oled_write_P(ARROWS, false);
@@ -88,9 +88,9 @@ void write_slave_layer_state(void) {
             break;
         case LAYER_2:
             if (is_shift_pressed)
-                oled_write("^&*()_+{}|_+{}|", false);
+                oled_write("&_{}%|:()?~${}@", false);
             else
-                oled_write("^&*()-=[]\\_+{}|", false);
+                oled_write("&_[]%|:()?~${}@", false);
             break;
         case LAYER_3:
             oled_write("               ", false);
@@ -112,11 +112,10 @@ void write_spacer(void) {
 }
 
 void write_current_layer(void) {
+    static const char *layer_names[] = {"QWERT", "NUMB ", "SYMBL", "FUNC ", "UNKN "};
     oled_write("LYR: ", false);
     int highest_layer = get_highest_layer(layer_state);
-    oled_write(" ", false);
-    oled_write(get_u8_str(highest_layer, '0'), false);
-    oled_write(" ", false);
+    oled_write(layer_names[highest_layer < 4 ? highest_layer : 4], false);
 }
 
 void write_boolean(bool value) {
@@ -142,18 +141,46 @@ void write_led_states(void) {
 }
 
 void write_penguin(void) {
-    static const char PROGMEM PENGUIN[] = {0x99, 0x9A, 0x20, 0x20, 0x20, 0xB9, 0xBA, 0x20, 0x20, 0x20, 0x0};
+    static const char PROGMEM PENGUIN[] = {0x20, 0x99, 0x9A, 0x20, 0x20, 0x20, 0xB9, 0xBA, 0x20, 0x20, '\0'};
     oled_write_P(PENGUIN, false);
+}
+
+void write_name(void) {
+    static const char PROGMEM NAME[] = {213, 214, 215, 216, 217, '\0'};
+    oled_write_P(NAME, false);
+}
+
+void write_wpm_bar(void) {
+    static const char PROGMEM BLOCK_CHAR[] = {164, '\0'};
+    static const char PROGMEM EMPTY_CHAR[] = {32, '\0'};
+
+    int wpm = get_current_wpm();
+    int wpm_bar_length = (wpm * 5) / 100;
+    wpm_bar_length = wpm_bar_length > 5 ? 5 : wpm_bar_length;
+    int wpm_bar_empty_length = 5 - wpm_bar_length;
+
+    for (int i = 0; i < wpm_bar_length; i++) {
+        oled_write_P(BLOCK_CHAR, false);
+    }
+    for (int i = 0; i < wpm_bar_empty_length; i++) {
+        oled_write_P(EMPTY_CHAR, false);
+    }
 }
 
 void slave_oled_task(void) {
     oled_set_cursor(0, 0);
     write_slave_layer_state();
     write_spacer();
+    write_spacer();
+    write_spacer();
     oled_write("WPM: ", false);
     write_wpm();
     write_spacer();
     write_current_layer();
+    write_spacer();
+    write_spacer();
+    write_spacer();
+    write_wpm_bar();
 }
 
 void master_oled_task(void) {
@@ -162,7 +189,12 @@ void master_oled_task(void) {
     write_spacer();
     write_led_states();
     write_spacer();
+    write_spacer();
+    write_spacer();
     write_penguin();
+    write_spacer();
+    write_spacer();
+    write_name();
 }
 
 bool oled_task_user(void) {
