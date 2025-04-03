@@ -145,8 +145,13 @@ void write_penguin(void) {
     oled_write_P(PENGUIN, false);
 }
 
-void write_name(void) {
+void write_lastname(void) {
     static const char PROGMEM NAME[] = {213, 214, 215, 216, 217, '\0'};
+    oled_write_P(NAME, false);
+}
+
+void write_name(void) {
+    static const char PROGMEM NAME[] = {218, 219, 220, 221, '\0'};
     oled_write_P(NAME, false);
 }
 
@@ -178,17 +183,17 @@ void slave_oled_task(void) {
     write_spacer();
     write_current_layer();
     write_spacer();
-    write_spacer();
-    write_spacer();
     write_wpm_bar();
+    write_spacer(); 
+    write_lastname();
 }
 
 void master_oled_task(void) {
     oled_set_cursor(0, 0);
     write_layer_state();
     write_spacer();
-    write_led_states();
     write_spacer();
+    write_led_states();
     write_spacer();
     write_spacer();
     write_penguin();
